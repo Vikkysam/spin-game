@@ -11,15 +11,13 @@ load_dotenv()
 app = Flask(__name__, static_folder="public", static_url_path="")
 CORS(app)
 
-app = Flask(__name__)
+# @app.route("/")
+# def home():
+#     return {"message": "Backend is running"}
 
-@app.route("/")
-def home():
-    return {"message": "Backend is running"}
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 5000))
-    app.run(host="0.0.0.0", port=port)
+# if __name__ == "__main__":
+#     port = int(os.environ.get("PORT", 5000))
+#     app.run(host="0.0.0.0", port=port)
 
 PORT = 3000
 PAYSTACK_SECRET_KEY = os.getenv("PAYSTACK_SECRET_KEY", "").strip()
@@ -28,14 +26,18 @@ PAYSTACK_SECRET_KEY = os.getenv("PAYSTACK_SECRET_KEY", "").strip()
 users = {}
 
 
+# @app.route("/")
+# def serve_index():
+#     return send_from_directory("public", "index.html")
+
+
+# @app.route("/game")
+# def serve_game():
+#     return send_from_directory("public", "game.html")
+
 @app.route("/")
-def serve_index():
-    return send_from_directory("public", "index.html")
-
-
-@app.route("/game")
-def serve_game():
-    return send_from_directory("public", "game.html")
+def home():
+    return jsonify({"message": "Backend is running"})
 
 
 @app.route("/health", methods=["GET"])
@@ -319,4 +321,5 @@ def spin():
 
 
 if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=PORT, debug=True)
+    port = int(os.environ.get("PORT", 5000))
+    app.run(host="0.0.0.0", port=port)
